@@ -79,7 +79,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 		//TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(null);
 		TrackSelection.Factory TrackSelectionFactory = new FixedTrackSelection.Factory();
 		trackSelector = new DefaultTrackSelector(TrackSelectionFactory);
-		trackSelector.setParameters(trackSelector.buildUponParameters().setPreferredAudioLanguage("ru"));
+		trackSelector.setParameters(trackSelector.buildUponParameters().setPreferredAudioLanguage("au1"));
 
 		// 3. Create the player
 		player = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
