@@ -1,5 +1,6 @@
 package ru.krasview.kvlib.widget.lists;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import android.content.Context;
+import android.net.Uri;
 import android.text.Html;
 
 import ru.krasview.kvlib.adapter.LoadDataToGUITask;
@@ -23,7 +25,10 @@ public class SearchShowList extends List implements SearchInterface {
 
 	@Override
 	public void goSearch(String str) {
-		getAdapter().setAddress(getApiAddress() + "?search=" + str);
+		Uri.Builder builder = Uri.parse(getApiAddress()).buildUpon();
+		builder.appendQueryParameter("search", str);
+		//getAdapter().setAddress(getApiAddress() + "?search=" + encodedURL);
+		getAdapter().setAddress(builder.build().toString());
 		this.refresh();
 	}
 

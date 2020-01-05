@@ -405,19 +405,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 			Exception cause = e.getRendererException();
 			if (cause instanceof DecoderInitializationException) {
 				// Special case for decoder initialization failures.
-				DecoderInitializationException decoderInitializationException =
-						(DecoderInitializationException) cause;
-				if (decoderInitializationException.decoderName == null) {
-					if (decoderInitializationException.getCause() instanceof DecoderQueryException) {
-						errorString = "error_querying_decoders";
-					} else if (decoderInitializationException.secureDecoderRequired) {
-						errorString = "secureDecoderRequired";
-					} else {
-						errorString = "Не найдено подходящего кодека";
-					}
-				} else {
-					errorString = "error_instantiating_decoder";
-				}
+				errorString = "Ошибка декодера";
 			}
 		} else if (e.type ==ExoPlaybackException.TYPE_SOURCE) {
 			String SourceEx = e.getSourceException().getMessage();
