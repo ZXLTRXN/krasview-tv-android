@@ -65,10 +65,10 @@ public class MainActivity extends KVSearchAndMenuActivity {
 		//сравнение со старыми адресами
 		if(ListAccount.fromLauncher) {
 			String address = getIntent().getExtras().getString("address");
-			/*if(address.equals(ApiConst.TV)) {
+			if(address.equals(ApiConst.TV)) {
 				start = TypeConsts.TV;
 				getSupportActionBar().setTitle("Телевидение");
-			} else */if(address.equals(ApiConst.OLD_ALL_SHOW)) {
+			} else if(address.equals(ApiConst.OLD_ALL_SHOW)) {
 				start = TypeConsts.ALL_SHOW;
 				getSupportActionBar().setTitle("Сериалы");
 			} else if(address.equals(ApiConst.OLD_ALL_ANIME)) {
