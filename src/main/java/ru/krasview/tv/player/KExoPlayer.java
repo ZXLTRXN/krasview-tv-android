@@ -53,7 +53,7 @@ import static ru.krasview.tv.player.VideoController.mVideo;
 public class KExoPlayer extends SurfaceView implements VideoInterface, EventListener {
 	private SurfaceView mSurface;
 	SimpleExoPlayer player;
-    PlayerView simpleExoPlayerView;
+    PlayerView StyledPlayerView;
 	DefaultHttpDataSourceFactory dataSourceFactory;
     DefaultTrackSelector trackSelector;
 
@@ -67,7 +67,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	public KExoPlayer(Context context, PlayerView view) {
 		super(context);
-		simpleExoPlayerView = view;
+		StyledPlayerView = view;
 		init();
 	}
 
@@ -76,15 +76,14 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 		// 1. Create a default TrackSelector
 		//BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
-		//TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(null);
-		TrackSelection.Factory TrackSelectionFactory = new FixedTrackSelection.Factory();
-		trackSelector = new DefaultTrackSelector(TrackSelectionFactory);
+		//TrackSelection.Factory TrackSelectionFactory = new FixedTrackSelection.Factory();
+		trackSelector = new DefaultTrackSelector(getContext());
 		trackSelector.setParameters(trackSelector.buildUponParameters().setPreferredAudioLanguage("au1"));
 
 		// 3. Create the player
 		player = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
-		simpleExoPlayerView.requestFocus();
-		simpleExoPlayerView.setPlayer(player);
+		StyledPlayerView.requestFocus();
+		StyledPlayerView.setPlayer(player);
 
 		//DefaultHttpDataSourceFactory http
 		dataSourceFactory = new DefaultHttpDataSourceFactory("http://kadu.ru", null);
@@ -95,11 +94,11 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	private void setSize() {
 		if(pref_aspect_ratio_video.equals("default")) {
-			simpleExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+			StyledPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
 		} else if(pref_aspect_ratio_video.equals("fullscreen")) {
-			simpleExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
+			StyledPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
 		} else {
-			simpleExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
+			StyledPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
 		}
 		calcSize();
 	}
@@ -298,6 +297,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	@Override
 	public String changeAudio() {
+		displayTrackSelector((VideoActivity) getContext());
 		return "Следующая дорожка";
 	}
 
@@ -309,13 +309,21 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	@Override
 	public int getAudioTracksCount() {
         int tracks = 0;
-        if(trackSelector == null) return tracks;
-        MappedTrackInfo mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
+        if(trackSelector == null || player == null) return tracks;
+		for(int i = 0; i < player.getCurrentTrackGroups().length; i++) {
+			String format = player.getCurrentTrackGroups().get(i).getFormat(0).sampleMimeType;
+			if(format.contains("audio")) {
+				tracks++;
+			}
+		}
+        /*MappedTrackInfo mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
         if(mappedTrackInfo != null) {
+			Log.d(TAG, "tracks total: " + mappedTrackInfo.getRendererCount());
             for (int i = 0; i < mappedTrackInfo.getRendererCount(); i++) {
-                if(player.getRendererType(i) == C.TRACK_TYPE_AUDIO) tracks++;
+                if(mappedTrackInfo.getRendererType(i) == C.TRACK_TYPE_AUDIO) tracks++;
+				//Log.d(TAG, "track: " + mappedTrackInfo.getRendererType(i));
             }
-        }
+        }*/
 
         Log.d(TAG, "tracks: " + tracks);
 		return tracks;
@@ -362,7 +370,12 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	public void onLoadingChanged(boolean isLoading) {
 		Log.d(TAG, "isLoading: " + isLoading);
 		//Log.d(TAG, "duration " + player.getDuration());
-		if(isLoading) {setSize(); if(mVideoController!=null) {mVideoController.showProgress();}}
+		if(isLoading) {
+			setSize();
+			if(mVideoController!=null) {
+				mVideoController.showProgress();
+			}
+		}
 		// Do nothing.
 	}
 
@@ -370,6 +383,12 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
 		Log.d(TAG, "playbackState: " + playbackState);
 		//Log.d(TAG, "duration " + player.getDuration());
+		if (playbackState == 3 && player != null) {
+			if(mVideoController!=null) {
+				Log.i("Debug", "Проверить число треков");
+				mVideoController.checkTrack();
+			}
+		}
 		if (playbackState == 4 && player != null) {
 			//if(mTVController != null) mTVController.end();
 			if(mVideoController != null) mVideoController.next();
@@ -407,7 +426,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 				// Special case for decoder initialization failures.
 				errorString = "Ошибка декодера";
 			}
-		} else if (e.type ==ExoPlaybackException.TYPE_SOURCE) {
+		} else if (e.type == ExoPlaybackException.TYPE_SOURCE) {
 			String SourceEx = e.getSourceException().getMessage();
 			if (SourceEx.contains("404")) {
 				errorString = "Файл не найден";
@@ -431,17 +450,20 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
-		//Log.d("Debug","нажата клавиша exo");
-        if(event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_MENU) {
+		//Toast.makeText(getContext(), "Нажата клавиша: " + event.getKeyCode(), Toast.LENGTH_LONG).show();
+        if (
+				(event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_MENU) ||
+				(event.getAction() == KeyEvent.ACTION_DOWN && event.isLongPress() && event.getKeyCode() == KeyEvent.KEYCODE_DPAD_CENTER)
+			) {
             displayTrackSelector((VideoActivity) getContext());
             return true;
         }
 
         if(mTVController!=null) {
-			return mTVController.dispatchKeyEvent(event) || simpleExoPlayerView.dispatchKeyEvent(event)	;
+			return mTVController.dispatchKeyEvent(event) || StyledPlayerView.dispatchKeyEvent(event);
 		}
 		if(mVideoController!=null) {
-			return mVideoController.dispatchKeyEvent(event) || simpleExoPlayerView.dispatchKeyEvent(event);
+			return mVideoController.dispatchKeyEvent(event) || StyledPlayerView.dispatchKeyEvent(event);
 		}
 		return true;
 	}

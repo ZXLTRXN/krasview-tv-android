@@ -27,7 +27,6 @@ public class SearchShowList extends List implements SearchInterface {
 	public void goSearch(String str) {
 		Uri.Builder builder = Uri.parse(getApiAddress()).buildUpon();
 		builder.appendQueryParameter("search", str);
-		//getAdapter().setAddress(getApiAddress() + "?search=" + encodedURL);
 		getAdapter().setAddress(builder.build().toString());
 		this.refresh();
 	}

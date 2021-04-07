@@ -308,7 +308,7 @@ public class VideoController extends FrameLayout {
 
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		//Log.d("Debug","нажата клавиша");
-		if(event.getAction() == KeyEvent.ACTION_DOWN) {
+		if(event.getAction() == KeyEvent.ACTION_UP) {
 			switch(event.getKeyCode()) {
 			case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
 			case KeyEvent.KEYCODE_DEL:
@@ -338,7 +338,7 @@ public class VideoController extends FrameLayout {
 
 	private void setESTrackLists() {
 		mAudio.setVisibility(View.GONE);
-		if(mVideo.getAudioTracksCount()>2) {
+		if(mVideo.getAudioTracksCount() > 1) {
 			mAudio.setVisibility(View.VISIBLE);
 		}
 		mSubtitle.setVisibility(View.GONE);

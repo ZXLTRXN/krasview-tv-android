@@ -37,7 +37,7 @@
                 android:clickable="true"
                 android:gravity="left|center_vertical"
                 android:paddingRight="10dp"
-                android:text="@string/time_0"               
+                android:text="@string/time_0"
                 android:textSize="@dimen/text_size_medium" />
 
             <SeekBar
@@ -114,6 +114,13 @@
             </FrameLayout>
 
             <ImageButton
+                android:id="@+id/player_overlay_audio"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/header_icon_audio" 
+                android:visibility="gone"
+                />
+            <ImageButton
                 android:id="@+id/player_overlay_size"
                 android:layout_width="40dip"
                 android:layout_height="40dip"
@@ -121,7 +128,7 @@
                 android:background="@drawable/ic_size" 
                 />
         </RelativeLayout>
-        
+
          <LinearLayout
             android:id="@+id/option_overlay"
             android:layout_width="wrap_content"
@@ -132,16 +139,6 @@
             android:orientation="vertical"
             android:paddingBottom="15dp" 
             >
-
-            <ImageButton
-                android:id="@+id/player_overlay_audio"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/header_icon_audio" 
-                android:visibility="gone"
-                />
 
             <ImageButton
                 android:id="@+id/player_overlay_subtitle"
