@@ -1,8 +1,9 @@
 package ru.krasview.kvlib.indep;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
-import ru.krasview.kvlib.indep.AuthAccount;
 import ru.krasview.kvlib.indep.consts.AuthRequestConst;
 import ru.krasview.kvlib.interfaces.FatalErrorExitListener;
 import ru.krasview.secret.ApiConst;
@@ -23,7 +24,6 @@ public class HTTPClient extends KVHttpClient {
 		exitListener = l;
 	}
 
-	@SuppressWarnings("deprecation")
 	public static String getXML(String address, String params, int request_auth_type) {
 		address = addParams(address, params);
 		String auth_address = address;
@@ -44,11 +44,17 @@ public class HTTPClient extends KVHttpClient {
 			} else if(account.isSocialNetworkAccount()) {
 				auth_address = address + "hash=" + account.getTvHash();
 			} else {
-				auth_address = address
-					+ "login=" + URLEncoder.encode(account.getLogin())
-					+ "&password=" + URLEncoder.encode(account.getPassword());
+				try {
+					auth_address = address
+						+ "login=" + URLEncoder.encode(account.getLogin(), StandardCharsets.UTF_8.toString())
+						+ "&password=" + URLEncoder.encode(account.getPassword(), StandardCharsets.UTF_8.toString());
+				} catch (UnsupportedEncodingException e) {
+					return null;
+				}
 			}
 			break;
+			default:
+				throw new IllegalStateException("Unexpected value: " + request_auth_type);
 		}
 		String result = getXML(auth_address);
 		if(result.equals("wrong hash")) {
@@ -56,19 +62,23 @@ public class HTTPClient extends KVHttpClient {
 				exitFromApplication();
 				return "";
 			}
-			String hash = getXML(ApiConst.KRASVIEW_AUTH, "login="
-			                     + URLEncoder.encode(account.getLogin())
-			                     + "&password=" + URLEncoder.encode(account.getPassword()));
-			account.setHash(hash);
-			if(account.getHash().equals("error")) {
-				exitFromApplication();
-				return "";
+			try {
+				String hash = getXML(ApiConst.KRASVIEW_AUTH, "login="
+			                     + URLEncoder.encode(account.getLogin(), StandardCharsets.UTF_8.toString())
+			                     + "&password=" + URLEncoder.encode(account.getPassword(), StandardCharsets.UTF_8.toString()));
+				account.setHash(hash);
+				if(account.getHash().equals("error")) {
+					exitFromApplication();
+					return "";
+				}
+				SharedPreferences prefs = PreferenceManager
+						.getDefaultSharedPreferences(mContext);
+				prefs.edit().putString("pref_hash", account.getHash()).commit();
+				auth_address = address + "hash=" + account.getHash();
+				result = getXML(auth_address);
+			} catch (UnsupportedEncodingException e) {
+				return null;
 			}
-			SharedPreferences prefs = PreferenceManager
-			                          .getDefaultSharedPreferences(mContext);
-			prefs.edit().putString("pref_hash", account.getHash()).commit();
-			auth_address = address + "hash=" + account.getHash();
-			result = getXML(auth_address);
 		}
 		return result;
 	}

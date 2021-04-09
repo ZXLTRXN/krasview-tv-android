@@ -6,19 +6,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-import org.apache.http.params.CoreProtocolPNames;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
 
@@ -30,15 +21,28 @@ import android.net.Uri;
 import android.os.AsyncTask;
 
 public class KVHttpClient {
+	OkHttpClient httpClient = new OkHttpClient();
+
+	String run(String url) throws IOException {
+		Request request = new Request.Builder()
+				.url(url)
+				.header("User-Agent", "krasview 2.0")
+				.build();
+
+		try (Response response = httpClient.newCall(request).execute()) {
+			return response.body().string();
+		}
+	}
+
 	public static String getXML(String address, String params) {
 		return getXML(addParams(address, params));
 	}
 
 	public static String getXML(String address) {
-	String line = "";
-	try {
-		DefaultHttpClient httpClient = new DefaultHttpClient();
-		//httpClient.getParams().setParameter(CoreProtocolPNames.USER_AGENT, "");
+		String line = "";
+		KVHttpClient client = new KVHttpClient();
+		try {
+/*		DefaultHttpClient httpClient = new DefaultHttpClient();
 
 		HttpGet httpGet = new HttpGet(address);
 		httpGet.setHeader("User-Agent", "krasview 2.0");
@@ -46,15 +50,16 @@ public class KVHttpClient {
 		HttpEntity httpEntity = httpResponse.getEntity();
 		if(httpEntity != null){
 			line = EntityUtils.toString(httpEntity, "UTF-8");
+		}*/
+			line = client.run(address);
+		} catch (UnsupportedEncodingException e) {
+			line = "<results status=\"error\"><msg>Can't connect to server</msg></results>";
+		} catch (MalformedURLException e) {
+			line = "<results status=\"error\"><msg>Can't connect to server</msg></results>";
+		} catch (IOException e) {
+			line = "<results status=\"error\"><msg>Can't connect to server</msg></results>";
 		}
-	} catch (UnsupportedEncodingException e) {
-		line = "<results status=\"error\"><msg>Can't connect to server</msg></results>";
-	} catch (MalformedURLException e) {
-		line = "<results status=\"error\"><msg>Can't connect to server</msg></results>";
-	} catch (IOException e) {
-		line = "<results status=\"error\"><msg>Can't connect to server</msg></results>";
-	}
-	return line;
+		return line;
 	}
 
 	protected static String addParams(String address, String params) {
@@ -138,21 +143,5 @@ public class KVHttpClient {
 			e1.printStackTrace();
 		}
 		return xmlString;
-	}
-
-	public static HttpResponse post(String address, String id, String msg) {
-		DefaultHttpClient httpClient = new DefaultHttpClient();
-		HttpPost httpPost = new HttpPost(address);
-		HttpResponse response = null;
-		try {
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-			nameValuePairs.add(new BasicNameValuePair(id, msg));
-			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			response = httpClient.execute(httpPost);
-		} catch (UnsupportedEncodingException e) {
-		} catch (MalformedURLException e) {
-		} catch (IOException e) {
-		}
-		return response;
 	}
 }
