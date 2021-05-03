@@ -126,7 +126,7 @@ public class BillingActivity extends Activity implements OnLoadCompleteListener,
 		}
 		@SuppressWarnings("unchecked")
 		public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-			//обарабтываем прошедшую выплату
+			//обрабатываем прошедшую выплату
 			Log.i("Debug", " purchasing: " + result);
 			if (result.isFailure()) {
 				//если ошибка
@@ -165,7 +165,6 @@ public class BillingActivity extends Activity implements OnLoadCompleteListener,
 
 	@Override
 	public void loadComplete(String address, String result) {
-		// TODO Auto-generated method stub
 	}
 
 	@SuppressWarnings("unchecked")
@@ -174,9 +173,9 @@ public class BillingActivity extends Activity implements OnLoadCompleteListener,
 			CombineSimpleAdapter adapter = (CombineSimpleAdapter) parent.getAdapter();
 
 			Map<String, Object> m = (Map<String, Object>)adapter.getItem(position);
-			if(m.get("inMarket") == null || !(Boolean)m.get("inMarket")){
+			if (m.get("inMarket") == null || !(Boolean)m.get("inMarket")){
 				return;
-			}else{
+			} else {
 				//Запуск процесса покупки
 				IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener 
 					= new PurchaseFinishedListener(m) ;
@@ -200,7 +199,7 @@ public class BillingActivity extends Activity implements OnLoadCompleteListener,
 
 		@Override
 		protected void onPostExecute(String result) {
-			if(result.equals("ok")) {
+			if (result.equals("ok")) {
 				setResultAndFinish();
 			}
 		}
