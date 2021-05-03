@@ -277,16 +277,16 @@ public class VideoController extends FrameLayout {
 				Boolean rt = (Boolean)mMap.get("rt");
 				mMap.remove("rt");
 				if((rt == null && !(Boolean)mMap.get("request_time"))|| rt == false ) {
-					//Log.i("Debug", "VideoController не запрашивать время " +rt);
+					//Log.i("VideoController", "VideoController не запрашивать время " +rt);
 					return 0;
 				} else {
-					//Log.i("Debug", "VideoController запрашивать время");
+					//Log.i("VideoController", "VideoController запрашивать время");
 				}
 				// todo request subtitles
 				String result = HTTPClient.getXML(ApiConst.GET_POSITION, "id="+id, AuthRequestConst.AUTH_KRASVIEW);
 				if(result!=null&&!result.equals("")&&!result.equals("<results status=\"error\"><msg>Can't connect to server</msg></results>")) {
 					int r = (int) Float.parseFloat(result);
-					//Log.i("Debug", "Получено время " + Util.millisToString(r*1000));
+					//Log.i("VideoController", "Получено время " + Util.millisToString(r*1000));
 					return r*1000;
 				} else {
 					return 0;
@@ -308,12 +308,12 @@ public class VideoController extends FrameLayout {
 
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		//Log.d("Debug","нажата клавиша");
-		if(event.getAction() == KeyEvent.ACTION_UP) {
+		if(event.getAction() == KeyEvent.ACTION_DOWN) {
 			switch(event.getKeyCode()) {
 			case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
 			case KeyEvent.KEYCODE_DEL:
 			case KeyEvent.KEYCODE_DPAD_CENTER:
-				listener.onClick(mPause);
+				if (!event.isLongPress()) listener.onClick(mPause);
 				return true;
 			case KeyEvent.KEYCODE_DPAD_LEFT:
 				listener.onClick(mBackward);
@@ -373,8 +373,6 @@ public class VideoController extends FrameLayout {
 				int progress = mVideo.getTime();
 				String params = "video_id="+video+"&time="+(progress/1000);
 
-                //String address_complete = ApiConst.SET_WATCH;
-				//String params_complete = "video_id="+video;//+"&login="+URLEncoder.encode(Parser.login)+"&password="+URLEncoder.encode(Parser.password);
 				Log.i("Debug", "Отправлено: id="+ video + " time=" + Util.millisToString(progress));
 				HTTPClient.getXML(address, params, AuthRequestConst.AUTH_KRASVIEW);
 			}
