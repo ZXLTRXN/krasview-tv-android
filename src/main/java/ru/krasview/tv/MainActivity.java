@@ -25,6 +25,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -198,6 +199,7 @@ public class MainActivity extends KVSearchAndMenuActivity {
 	String pref_orientation = "default";
 	@Override
 	public void onResume() {
+		Log.d("Krasview/core", "onResume");
 		super.onResume();
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		pref_orientation = prefs.getString("orientation", "default");
@@ -212,11 +214,18 @@ public class MainActivity extends KVSearchAndMenuActivity {
 
 	@Override
 	public void onBackPressed() {
+		Log.d("Krasview/core", "onBackPressed");
 		super.onBackPressed();
 		if(ListAccount.fromLauncher) {
 			overridePendingTransition(ru.krasview.tv.R.anim.anim_enter_left,
 			                          ru.krasview.tv.R.anim.anim_leave_right);
 		}
+	}
+
+	@Override
+	public void onPause() {
+		Log.d("Krasview/core", "onPause");
+		super.onPause();
 	}
 
 	@Override

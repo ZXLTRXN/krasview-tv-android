@@ -45,6 +45,7 @@ public class VideoController extends FrameLayout {
 	ImageButton mSubtitle;
 	ScheduledExecutorService service;
 	Future<?> timer;
+	public final static String TAG = "Krasview/VideoController";
 
 	int time = 0;
 
@@ -194,12 +195,12 @@ public class VideoController extends FrameLayout {
 		public void onStartTrackingTouch(SeekBar seekBar) {
 			//   mDragging = true;
 			//   showOverlay(OVERLAY_INFINITE);
-			Log.i("Debug", "Юзер start touch ");
+			Log.i(TAG, "Юзер start touch ");
 		}
 
 		@Override
 		public void onStopTrackingTouch(SeekBar seekBar) {
-			Log.i("Debug", "Юзер stop touch");
+			Log.i(TAG, "Юзер stop touch");
 			//  mDragging = false;
 			//  showOverlay();
 			//  hideInfo();
@@ -209,7 +210,7 @@ public class VideoController extends FrameLayout {
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 			//Log.i("Debug", "кто-то перемотал видео");
 			if (fromUser) {
-				Log.i("Debug", "Юзер перемотал видео");
+				Log.i(TAG, "Юзер перемотал видео");
 				//  mLibVLC.setTime(progress);
 				//  setOverlayProgress();
 				//  mTime.setText(Util.millisToString(progress));
@@ -325,7 +326,7 @@ public class VideoController extends FrameLayout {
 				mVideo.stop();
 				mPause.setBackgroundResource(R.drawable.ic_new_play);
 				return true;
-			default: Log.i("Debug", "Нажата клавиша: " + event.getKeyCode());
+			default: Log.i(TAG, "Нажата клавиша: " + event.getKeyCode());
 			}
 		}
 		return false;
@@ -353,7 +354,7 @@ public class VideoController extends FrameLayout {
 
 	public void end() {
 		timer.cancel(true);
-		Log.i("Debug", "end");
+		Log.i(TAG, "end");
 	}
 	public void next() {
 		((VideoActivity)getContext()).onNext(false);
@@ -371,10 +372,12 @@ public class VideoController extends FrameLayout {
 			public void run() {
 				String address = ApiConst.SET_POSITION;
 				int progress = mVideo.getTime();
-				String params = "video_id="+video+"&time="+(progress/1000);
+				if (progress > 0) {
+					String params = "video_id=" + video + "&time=" + (progress / 1000);
 
-				Log.i("Debug", "Отправлено: id="+ video + " time=" + Util.millisToString(progress));
-				HTTPClient.getXML(address, params, AuthRequestConst.AUTH_KRASVIEW);
+					Log.i(TAG, "Отправлено: id=" + video + " time=" + Util.millisToString(progress));
+					HTTPClient.getXML(address, params, AuthRequestConst.AUTH_KRASVIEW);
+				}
 			}
 		}
 

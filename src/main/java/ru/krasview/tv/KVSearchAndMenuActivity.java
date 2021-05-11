@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Process;
 import android.preference.PreferenceManager;
 import androidx.fragment.app.FragmentManager;
 import androidx.core.view.MenuItemCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -53,6 +56,7 @@ public abstract class KVSearchAndMenuActivity extends AppCompatActivity
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		Log.d("Krasview/core", "onCreate");
 		super.onCreate(savedInstanceState);
 	}
 
@@ -269,5 +273,13 @@ public abstract class KVSearchAndMenuActivity extends AppCompatActivity
 	public boolean onQueryTextChange(String newText) {
 		// todo searchFragment.goSearch(newText);
 		return false;
+	}
+
+	@Override
+	protected void onDestroy() {
+		Log.d("Krasview/core", "onDestroy");
+		super.onDestroy();
+		int pid = Process.myPid();
+		Process.killProcess(pid);
 	}
 }

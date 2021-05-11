@@ -6,10 +6,12 @@ import com.example.kvlib.R;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 
 public class PrMainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.d("Krasview/corePr", "onCreate");
 
 		if(ListAccount.fromLauncher) {
 			getActionBar().setIcon(R.drawable.kv_logo);

@@ -50,6 +50,8 @@ import android.widget.Toast;
 
 import static ru.krasview.tv.player.VideoController.mVideo;
 
+
+// todo: https://developer.android.com/codelabs/exoplayer-intro#0
 public class KExoPlayer extends SurfaceView implements VideoInterface, EventListener {
 	private SurfaceView mSurface;
 	SimpleExoPlayer player;
@@ -61,6 +63,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	VideoController mVideoController;
 	Map<String, Object> mMap;
 	public final static String TAG = "Krasview/KExoPlayer";
+	public boolean is_playing = false;
 
 	String pref_aspect_ratio = "default";
 	String pref_aspect_ratio_video = "default";
@@ -280,7 +283,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	@Override
 	public int getTime() {
-	    if(player == null) return 0;
+	    if(player == null || !is_playing) return 0;
 		return (int)player.getCurrentPosition();
 	}
 
@@ -340,6 +343,11 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	@Override
 	public void setOnErrorListener(MediaPlayer.OnErrorListener l) {
+	}
+
+	@Override
+	public void onIsPlayingChanged(boolean isPlaying) {
+		is_playing = isPlaying;
 	}
 
 	@Override
