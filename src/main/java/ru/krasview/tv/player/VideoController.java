@@ -256,12 +256,12 @@ public class VideoController extends FrameLayout {
 	}
 
 	private void goBackward() {
-		mVideo.setTime(mVideo.getTime() - 10000);
+		mVideo.setTime(-10000);
 		showProgress();
 	}
 
 	private void goForward() {
-		mVideo.setTime(mVideo.getTime() + 10000);
+		mVideo.setTime(10000);
 		showProgress();
 	}
 	String id;
@@ -326,6 +326,36 @@ public class VideoController extends FrameLayout {
 				mVideo.stop();
 				mPause.setBackgroundResource(R.drawable.ic_new_play);
 				return true;
+			case KeyEvent.KEYCODE_0:
+				mVideo.setTime(0);
+				return true;
+			case KeyEvent.KEYCODE_1:
+				mVideo.setTime(10);
+				return true;
+			case KeyEvent.KEYCODE_2:
+				mVideo.setTime(20);
+				return true;
+			case KeyEvent.KEYCODE_3:
+				mVideo.setTime(30);
+				return true;
+			case KeyEvent.KEYCODE_4:
+				mVideo.setTime(40);
+				return true;
+			case KeyEvent.KEYCODE_5:
+				mVideo.setTime(50);
+				return true;
+			case KeyEvent.KEYCODE_6:
+				mVideo.setTime(60);
+				return true;
+			case KeyEvent.KEYCODE_7:
+				mVideo.setTime(70);
+				return true;
+			case KeyEvent.KEYCODE_8:
+				mVideo.setTime(80);
+				return true;
+			case KeyEvent.KEYCODE_9:
+				mVideo.setTime(90);
+				return true;
 			default: Log.i(TAG, "Нажата клавиша: " + event.getKeyCode());
 			}
 		}
@@ -372,7 +402,7 @@ public class VideoController extends FrameLayout {
 			public void run() {
 				String address = ApiConst.SET_POSITION;
 				int progress = mVideo.getTime();
-				if (progress > 0) {
+				if (progress > 0 && mVideo.isPlaying()) {
 					String params = "video_id=" + video + "&time=" + (progress / 1000);
 
 					Log.i(TAG, "Отправлено: id=" + video + " time=" + Util.millisToString(progress));
@@ -382,7 +412,8 @@ public class VideoController extends FrameLayout {
 		}
 
 		static void updateProgress(String id) {
-			new Thread(new SentProgressRunnable(id)).start();
+			Runnable update = new SentProgressRunnable(id);
+			new Thread(update).start();
 		};
 	}
 }

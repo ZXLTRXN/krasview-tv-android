@@ -253,9 +253,10 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	@Override
 	public boolean isPlaying() {
-		Log.d(TAG, "isPlaying");
+		//Log.d(TAG, "isPlaying");
 		if(player == null) return false;
-		return player.getPlayWhenReady();
+		//return player.getPlayWhenReady();
+		return is_playing;
 	}
 
 	@Override
@@ -283,13 +284,20 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 	@Override
 	public int getTime() {
-	    if(player == null || !is_playing) return 0;
+	    if(player == null) return 0;
 		return (int)player.getCurrentPosition();
 	}
 
 	@Override
 	public void setTime(int time) {
-		if(player != null) player.seekTo(time);
+		int pos;
+		if (time >= 100 || time < 0) {
+			pos = (int) player.getCurrentPosition() + time;
+			if (pos < 0) pos = 0;
+		} else {
+			pos = (int) player.getDuration() * time / 100;
+		}
+		if(player != null) player.seekTo(pos);
 	}
 
 	@Override
