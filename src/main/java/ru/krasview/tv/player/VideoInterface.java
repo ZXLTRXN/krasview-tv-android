@@ -19,6 +19,7 @@ public interface VideoInterface {
 	public int getLeight();
 	public int getTime();
 	public void setTime(int time);
+	public void setPosition(int time);
 	public int changeSizeMode();
 	public String changeAudio();
 	public String changeSubtitle();

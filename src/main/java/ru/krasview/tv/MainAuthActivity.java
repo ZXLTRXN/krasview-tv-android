@@ -26,6 +26,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -296,7 +297,7 @@ public class MainAuthActivity extends Activity {
 						return;
 					}
 					check_tv = true;
-					if(result.equals("fail") || result.equals("auth failed") || result.equals("")) {
+					if(result.equals("fail") || result.equals("auth failed") || result.equals("too many attempts") || result.equals("error") || result.equals("")) {
 						tv = false;
 					} else {
 						prefs.edit().putString("pref_hash_tv", result).commit();
@@ -311,7 +312,7 @@ public class MainAuthActivity extends Activity {
 						return;
 					}
 					check_krasview = true;
-					if(result.equals("error")) {
+					if(result.equals("error") || result.equals("too many attempts")) {
 						krasview = false;
 					} else {
 						prefs.edit().putString("pref_hash", result).commit();

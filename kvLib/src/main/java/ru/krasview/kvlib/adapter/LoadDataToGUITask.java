@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class LoadDataToGUITask extends AsyncTask<String, Map<String, Object>, Void>  {
 	private CombineSimpleAdapter mAdapter;
@@ -35,7 +36,7 @@ public class LoadDataToGUITask extends AsyncTask<String, Map<String, Object>, Vo
 			onStep(m);
 			return null;
 		}
-		if(str.equals("auth failed")){
+		if(str.equals("auth failed") || str.equals("too many attempts")){
 			Map<String, Object> m = new HashMap<String, Object>();
 			m = new HashMap<String, Object>();
 			m.put("name", "<неверный логин или пароль>");

@@ -291,6 +291,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 	@Override
 	public void setTime(int time) {
 		int pos;
+		Log.d(TAG, "time	 " + time);
 		if (time >= 100 || time < 0) {
 			pos = (int) player.getCurrentPosition() + time;
 			if (pos < 0) pos = 0;
@@ -298,6 +299,11 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 			pos = (int) player.getDuration() * time / 100;
 		}
 		if(player != null) player.seekTo(pos);
+	}
+
+	@Override
+	public void setPosition(int time) {
+		if(player != null) player.seekTo(time);
 	}
 
 	@Override

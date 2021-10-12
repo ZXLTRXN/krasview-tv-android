@@ -522,11 +522,15 @@ public class VLCView extends SurfaceView implements IVideoPlayer, VideoInterface
 
 	@Override
 	public void setTime(int time) {
-		// TODO Auto-generated method stub
 		if(mLibVLC==null) {
 			return;
 		}
 		mLibVLC.setTime(time);
+	}
+
+	@Override
+	public void setPosition(int time) {
+		this.setTime(time);
 	}
 
 	@Override

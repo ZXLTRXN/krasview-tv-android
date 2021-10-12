@@ -169,6 +169,10 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
         }
         mMediaPlayer.setTime(time);
     }
+    @Override
+    public void setPosition(int time) {
+        this.setTime(time);
+    }
 
     @Override
     public int changeSizeMode() {

@@ -218,7 +218,7 @@ public class VideoController extends FrameLayout {
 
 				//	mLibVLC.setTime(progress);
 				//    setOverlayProgress();
-				mVideo.setTime(progress);
+				mVideo.setPosition(progress);
 				showProgress();
 			} else {
 				mSeekbar.setMax(mVideo.getLeight());
@@ -298,7 +298,7 @@ public class VideoController extends FrameLayout {
 				time = result;
 				mVideo.setVideoAndStart((String) mMap.get("uri"));
 				//((VideoActivity)getContext()).showInfo("поставлено время " + Util.millisToString(time), 3000);
-				mVideo.setTime(time);
+				mVideo.setPosition(time);
 				showProgress();
 				timer = service.scheduleAtFixedRate(new Updater.SentProgressRunnable(id),20,20, TimeUnit.SECONDS);
 			}

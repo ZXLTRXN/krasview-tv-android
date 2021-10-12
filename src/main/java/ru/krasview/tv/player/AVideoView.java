@@ -183,6 +183,11 @@ public class AVideoView extends VideoView implements VideoInterface {
 		this.seekTo(time);
 	}
 
+	@Override
+	public void setPosition(int time) {
+		this.setTime(time);
+	}
+
 	public Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {

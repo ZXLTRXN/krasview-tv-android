@@ -11,6 +11,7 @@ import ru.krasview.secret.ApiConst;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class HTTPClient extends KVHttpClient {
 	static Context mContext = null;
