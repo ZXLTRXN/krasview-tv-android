@@ -1,10 +1,8 @@
 package ru.krasview.tv.player;
 
 import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.videolan1.vlc.Util;
 
@@ -43,8 +41,7 @@ public class VideoController extends FrameLayout {
 	ImageButton mSize;
 	ImageButton mAudio;
 	ImageButton mSubtitle;
-	ScheduledExecutorService service;
-	Future<?> timer;
+	Timer timer;
 	public final static String TAG = "Krasview/VideoController";
 
 	int time = 0;
@@ -96,7 +93,7 @@ public class VideoController extends FrameLayout {
 		mSubtitle = (ImageButton)findViewById(R.id.player_overlay_subtitle);
 		mSubtitle.setOnClickListener(listener);
 		//mSubtitle.setVisibility(View.VISIBLE);
-		service = Executors.newSingleThreadScheduledExecutor();
+		timer = new Timer();
 	}
 
 	OnClickListener listener = new OnClickListener() {
@@ -252,7 +249,6 @@ public class VideoController extends FrameLayout {
 		mSeekListener.onProgressChanged(mSeekbar, mVideo.getProgress(), false);
 		mTime.setText("" + Util.millisToString(mVideo.getTime()));
 		mLeight.setText("" + Util.millisToString(mVideo.getLeight()));
-		Updater.updateProgress(id);
 	}
 
 	private void goBackward() {
@@ -300,7 +296,20 @@ public class VideoController extends FrameLayout {
 				//((VideoActivity)getContext()).showInfo("поставлено время " + Util.millisToString(time), 3000);
 				mVideo.setPosition(time);
 				showProgress();
-				timer = service.scheduleAtFixedRate(new Updater.SentProgressRunnable(id),20,20, TimeUnit.SECONDS);
+				TimerTask updatePos = new TimerTask() {
+					@Override
+					public void run() {
+						String address = ApiConst.SET_POSITION;
+						int progress = mVideo.getTime();
+						if (progress > 0 && mVideo.isPlaying()) {
+							String params = "video_id=" + id + "&time=" + (progress / 1000);
+
+							Log.i(TAG, "Отправлено: id=" + id + " time=" + Util.millisToString(progress));
+							HTTPClient.getXML(address, params, AuthRequestConst.AUTH_KRASVIEW);
+						}
+					}
+				};
+				timer.schedule(updatePos, 0, 20000);
 			}
 		};
 
@@ -383,37 +392,11 @@ public class VideoController extends FrameLayout {
 	}
 
 	public void end() {
-		timer.cancel(true);
+		timer.cancel();
+		timer.purge();
 		Log.i(TAG, "end");
 	}
 	public void next() {
 		((VideoActivity)getContext()).onNext(false);
-	}
-
-	private static class Updater {
-		private static class SentProgressRunnable implements Runnable {
-			String video = "";
-
-			SentProgressRunnable(String id) {
-				super();
-				video = id;
-			}
-			@Override
-			public void run() {
-				String address = ApiConst.SET_POSITION;
-				int progress = mVideo.getTime();
-				if (progress > 0 && mVideo.isPlaying()) {
-					String params = "video_id=" + video + "&time=" + (progress / 1000);
-
-					Log.i(TAG, "Отправлено: id=" + video + " time=" + Util.millisToString(progress));
-					HTTPClient.getXML(address, params, AuthRequestConst.AUTH_KRASVIEW);
-				}
-			}
-		}
-
-		static void updateProgress(String id) {
-			Runnable update = new SentProgressRunnable(id);
-			new Thread(update).start();
-		};
 	}
 }
