@@ -74,10 +74,16 @@ public class SocialAuthActivity extends Activity {
 			CookieManager cookieManager = CookieManager.getInstance();
 			cookieManager.setAcceptCookie(true);
 			String cookie = cookieManager.getCookie("hlamer.ru");
-			Log.i("Debug", "cookie " +  cookie + "; address: " + uri.getSchemeSpecificPart());
+			Log.i("Krasview/Oauth", "cookie " +  cookie + "; address: " + uri.getSchemeSpecificPart());
 			if(cookie!=null) {
 				String[] x = Pattern.compile(";").split(cookie);
-				String hash = x[0].replaceFirst("user=", "");
+				String hash = "";
+				for (int i = 0; i < x.length; i++) {
+					if (x[i].contains("user=")) hash = x[i].replaceFirst("user=", "").trim();
+				}
+				Log.i("Krasview/Oauth", "hash " +  hash);
+				if (hash == "") SocialAuthActivity.this.finish();
+
 				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 				prefs.edit().putString("pref_hash", hash).commit();
 
@@ -92,7 +98,7 @@ public class SocialAuthActivity extends Activity {
 						if(address.equals(get_user_info)) {
 							SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 							Document mDocument = Parser.XMLfromString(result);
-							if(mDocument == null) { return; }
+							if (mDocument == null) { return; }
 							mDocument.normalizeDocument();
 							Node node = mDocument.getElementsByTagName("user").item(0);
 							Element user = (Element)node;

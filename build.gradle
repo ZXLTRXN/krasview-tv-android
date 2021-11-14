@@ -30,8 +30,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 182
-        versionName "1.0"
+        versionCode 183
+        versionName "1.183"
     }
     splits {
         abi {

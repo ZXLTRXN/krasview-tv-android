@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.videolan1.vlc.Util;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -172,7 +173,7 @@ public class MainAuthActivity extends Activity {
 		social_grid.setNumColumns(GridView.AUTO_FIT);
 		social_grid.setColumnWidth(48);
 		social_grid.setVerticalSpacing(3);
-		social_grid.setHorizontalSpacing(3);
+		social_grid.setHorizontalSpacing(15);
 	}
 
 	private class SocialButtonAdapter extends BaseAdapter {
