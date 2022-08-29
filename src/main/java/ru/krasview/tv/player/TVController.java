@@ -9,7 +9,8 @@ import org.w3c.dom.NodeList;
 import ru.krasview.kvlib.indep.AuthAccount;
 import ru.krasview.kvlib.indep.HTTPClient;
 import ru.krasview.kvlib.indep.Parser;
-import ru.krasview.secret.ApiConst;
+import ru.krasview.tv.ApiConst;
+
 
 import com.example.kvlib.R;
 import android.content.Context;

@@ -6,7 +6,7 @@ import ru.krasview.kvlib.indep.AuthAccount;
 import ru.krasview.kvlib.indep.HTTPClient;
 import ru.krasview.kvlib.indep.consts.IntentConst;
 import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
-import ru.krasview.secret.ApiConst;
+
 import android.app.Activity;
 import android.os.Build;
 import androidx.annotation.RequiresApi;

@@ -15,7 +15,7 @@ import ru.krasview.kvlib.indep.AuthAccount;
 import ru.krasview.kvlib.indep.HTTPClient;
 import ru.krasview.kvlib.indep.Parser;
 import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
-import ru.krasview.secret.ApiConst;
+
 
 import android.app.Activity;
 import android.app.ProgressDialog;

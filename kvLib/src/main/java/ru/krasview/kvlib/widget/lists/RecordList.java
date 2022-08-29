@@ -9,9 +9,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import ru.krasview.kvlib.ApiConst;
 import ru.krasview.kvlib.adapter.LoadDataToGUITask;
 import ru.krasview.kvlib.indep.Parser;
-import ru.krasview.secret.ApiConst;
+
 import ru.krasview.kvlib.widget.List;
 
 import android.content.Context;
@@ -25,7 +26,7 @@ public class RecordList extends List {
 
 	@Override
 	protected String getApiAddress() {
-		return ApiConst.RECORD +"?id=" + getMap().get("channel_id") 
+		return ApiConst.RECORD +"?id=" + getMap().get("channel_id")
 				+"&date=" + getMap().get("id");
 	}
 

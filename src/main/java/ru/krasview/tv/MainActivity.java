@@ -13,7 +13,7 @@ import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
 import ru.krasview.kvlib.interfaces.PropotionerView;
 import ru.krasview.kvlib.widget.List;
 import ru.krasview.kvlib.widget.NavigationViewFactory;
-import ru.krasview.secret.ApiConst;
+
 
 import android.app.ProgressDialog;
 import android.content.Context;

@@ -6,10 +6,10 @@
     android:versionCode="166"
     android:versionName="1.5">
 
-    <uses-permission android:name="com.android.vending.BILLING" />
+
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
@@ -25,13 +25,14 @@
         android:icon="@drawable/new_krasview_logo_small"
         android:logo="@drawable/logo_bar"
         android:label="krasview"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MyTheme"
         android:hardwareAccelerated="true" >
 
         <activity
             android:name="ru.krasview.tv.MainAuthActivity" 
             android:theme="@style/Theme.MyTheme.NoTitleBar"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.LAUNCH"/>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -67,21 +68,12 @@
             android:label="">
         </activity>
 
-         <activity
-            android:name="ru.krasview.tv.BillingActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Оплата">
-            <intent-filter>
-                <action android:name="ru.krasview.tv.ACTION_BILLING"/>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-         <activity
+        <activity
             android:name="ru.krasview.tv.player.VideoActivity" 
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.MyTheme.NoTitleBar.Fullscreen"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance"
+             android:exported="true">
             <intent-filter>
                 <action android:name="ru.krasview.tv.PLAY_VIDEO_LIST"/>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -92,7 +84,8 @@
             android:name=".MainActivity"
             android:label=""
             android:theme="@style/Theme.AppCompat"
-            android:configChanges="orientation|keyboardHidden|screenSize">
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true">
             <intent-filter>
                 <action android:name="krasview.intent.action.LAUNCH"/>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -115,13 +108,15 @@
         <service android:name="org.videolan1.vlc.AudioService" />
 
         <receiver
-            android:name="org.videolan1.vlc.PhoneStateReceiver">
+            android:name="org.videolan1.vlc.PhoneStateReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name="org.videolan1.vlc.RemoteControlClientReceiver">
+        <receiver android:name="org.videolan1.vlc.RemoteControlClientReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>

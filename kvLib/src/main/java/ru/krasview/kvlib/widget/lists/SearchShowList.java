@@ -12,10 +12,11 @@ import android.content.Context;
 import android.net.Uri;
 import android.text.Html;
 
+import ru.krasview.kvlib.ApiConst;
 import ru.krasview.kvlib.adapter.LoadDataToGUITask;
 import ru.krasview.kvlib.interfaces.SearchInterface;
 import ru.krasview.kvlib.indep.Parser;
-import ru.krasview.secret.ApiConst;
+
 import ru.krasview.kvlib.widget.List;
 
 public class SearchShowList extends List implements SearchInterface {

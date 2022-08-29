@@ -4,7 +4,8 @@ import android.content.Context;
 
 import java.util.Map;
 
-import ru.krasview.secret.ApiConst;
+import ru.krasview.kvlib.ApiConst;
+
 
 public class GenreShowList extends AllShowList {
     String section;

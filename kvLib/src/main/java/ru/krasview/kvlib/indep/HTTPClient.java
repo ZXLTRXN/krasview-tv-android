@@ -4,9 +4,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+import ru.krasview.kvlib.ApiConst;
 import ru.krasview.kvlib.indep.consts.AuthRequestConst;
 import ru.krasview.kvlib.interfaces.FatalErrorExitListener;
-import ru.krasview.secret.ApiConst;
+
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -1,7 +1,9 @@
 package ru.krasview.kvlib.widget.lists;
 
-import ru.krasview.secret.ApiConst;
+
 import android.content.Context;
+
+import ru.krasview.kvlib.ApiConst;
 
 public class SearchAnimeList extends SearchShowList {
 	public SearchAnimeList(Context context) {

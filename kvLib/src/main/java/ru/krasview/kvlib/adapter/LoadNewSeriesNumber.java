@@ -5,10 +5,11 @@ import java.util.Map;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import ru.krasview.kvlib.ApiConst;
 import ru.krasview.kvlib.indep.consts.AuthRequestConst;
 import ru.krasview.kvlib.indep.HTTPClient;
 import ru.krasview.kvlib.indep.Parser;
-import ru.krasview.secret.ApiConst;
+
 
 import android.os.AsyncTask;
 

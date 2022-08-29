@@ -9,11 +9,12 @@ import org.w3c.dom.NodeList;
 import java.util.HashMap;
 import java.util.Map;
 
+import ru.krasview.kvlib.ApiConst;
 import ru.krasview.kvlib.adapter.LoadDataToGUITask;
 import ru.krasview.kvlib.indep.Parser;
 import ru.krasview.kvlib.indep.consts.TypeConsts;
 import ru.krasview.kvlib.widget.List;
-import ru.krasview.secret.ApiConst;
+
 
 public class AllGenreShowList extends List {
     String section;

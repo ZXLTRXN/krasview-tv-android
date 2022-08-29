@@ -2,9 +2,11 @@ package ru.krasview.kvlib.widget.lists;
 
 import java.util.Map;
 
-import ru.krasview.secret.ApiConst;
+
 
 import android.content.Context;
+
+import ru.krasview.kvlib.ApiConst;
 
 public class LetterMovieList extends LetterShowList {
 	public LetterMovieList(Context context, Map<String, Object> map) {

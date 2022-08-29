@@ -1,2 +1,2 @@
-include ':kvSecret', ':libvlc'
+include  ':libvlc'
 include ':kvLib'

@@ -2,11 +2,12 @@ package ru.krasview.kvlib.widget;
 
 import java.util.HashMap;
 
+import ru.krasview.kvlib.ApiConst;
 import ru.krasview.kvlib.indep.Parser;
 import ru.krasview.kvlib.interfaces.OnLoadCompleteListener;
 import ru.krasview.kvlib.interfaces.ViewProposeListener;
 import ru.krasview.kvlib.indep.HTTPClient;
-import ru.krasview.secret.ApiConst;
+
 
 import com.example.kvlib.R;
 

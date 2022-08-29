@@ -8,13 +8,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import ru.krasview.kvlib.ApiConst;
 import ru.krasview.kvlib.adapter.CombineSimpleAdapter;
 import ru.krasview.kvlib.adapter.LoadDataToGUITask;
 import ru.krasview.kvlib.indep.ListAccount;
 import ru.krasview.kvlib.indep.Parser;
 import ru.krasview.kvlib.indep.consts.AuthRequestConst;
 import ru.krasview.kvlib.indep.consts.TypeConsts;
-import ru.krasview.secret.ApiConst;
+
 
 import android.app.Activity;
 import android.content.Context;

@@ -8,7 +8,7 @@ import org.videolan1.vlc.Util;
 
 import ru.krasview.kvlib.indep.HTTPClient;
 import ru.krasview.kvlib.indep.consts.AuthRequestConst;
-import ru.krasview.secret.ApiConst;
+import ru.krasview.tv.ApiConst;
 
 import com.example.kvlib.R;
 
@@ -42,7 +42,7 @@ public class VideoController extends FrameLayout {
 	ImageButton mAudio;
 	ImageButton mSubtitle;
 	Timer timer;
-	public final static String TAG = "Krasview/VideoController";
+	public final static String TAG = "VideoController";
 
 	int time = 0;
 

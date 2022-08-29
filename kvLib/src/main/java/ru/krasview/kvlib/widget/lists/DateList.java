@@ -7,10 +7,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import ru.krasview.kvlib.ApiConst;
 import ru.krasview.kvlib.adapter.LoadDataToGUITask;
 import ru.krasview.kvlib.indep.Parser;
 import ru.krasview.kvlib.widget.List;
-import ru.krasview.secret.ApiConst;
+
 
 import android.content.Context;
 import android.text.Html;
