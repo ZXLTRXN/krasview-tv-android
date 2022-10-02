@@ -483,6 +483,15 @@ public class VLCView extends SurfaceView implements IVideoPlayer, VideoInterface
 	}
 
 	@Override
+	public void setPlaybackSpeed(float speed) {
+		//TODO: unnecessary there
+	}
+
+	public float getPlaybackSpeed() {
+		return 1f;
+	}
+
+	@Override
 	public boolean showOverlay() {
 		setOverlayProgress();
 		return true;

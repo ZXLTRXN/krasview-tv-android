@@ -13,6 +13,8 @@ public interface VideoInterface {
 	public void setVideoController(VideoController vc);
 	public void setMap(Map<String, Object> map);
 	public boolean isPlaying();
+	public void setPlaybackSpeed(float speed);
+	public float getPlaybackSpeed();
 	public boolean showOverlay();
 	public boolean hideOverlay();
 	public int getProgress();

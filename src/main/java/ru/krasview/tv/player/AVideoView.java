@@ -151,6 +151,15 @@ public class AVideoView extends VideoView implements VideoInterface {
 	}
 
 	@Override
+	public void setPlaybackSpeed(float speed) {
+		//TODO: unnecessary there
+	}
+
+	public float getPlaybackSpeed() {
+		return 1f;
+	}
+
+	@Override
 	public boolean showOverlay() {
 		mHandler.removeMessages(SHOW_PROGRESS);
 		mHandler.sendEmptyMessage(SHOW_PROGRESS);

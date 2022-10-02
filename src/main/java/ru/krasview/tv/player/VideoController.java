@@ -164,6 +164,22 @@ public class VideoController extends FrameLayout {
 		}
 	};
 
+	private float roundPlaybackSpeed(double value) {
+		return (float) (Math.round(value * 10.0) / 10.0);
+	}
+
+	private float nextPlaybackSpeed() {
+		float newSpeed = roundPlaybackSpeed(mVideo.getPlaybackSpeed() + 0.1);
+		mVideo.setPlaybackSpeed(newSpeed);
+		return newSpeed;
+	}
+
+	private float previousPlaybackSpeed() {
+		float newSpeed = roundPlaybackSpeed(mVideo.getPlaybackSpeed() - 0.1);
+		mVideo.setPlaybackSpeed(newSpeed);
+		return newSpeed;
+	}
+
 	Handler mHandler = new VideoControllerHandler(this);
 	private static class VideoControllerHandler extends Handler {
 		VideoController mTVController;
@@ -330,6 +346,12 @@ public class VideoController extends FrameLayout {
 				return true;
 			case KeyEvent.KEYCODE_DPAD_RIGHT:
 				listener.onClick(mForward);
+				return true;
+				case KeyEvent.KEYCODE_PAGE_UP:
+				((VideoActivity)getContext()).showInfo(String.valueOf(nextPlaybackSpeed()), 1000);
+				return true;
+				case KeyEvent.KEYCODE_PAGE_DOWN:
+				((VideoActivity)getContext()).showInfo(String.valueOf(previousPlaybackSpeed()), 1000);
 				return true;
 			case KeyEvent.KEYCODE_MEDIA_STOP:
 				mVideo.stop();

@@ -127,6 +127,15 @@ public class VideoViewVLC extends SurfaceView implements IVLCVout.Callback, IVLC
     }
 
     @Override
+    public void setPlaybackSpeed(float speed) {
+        //TODO: unnecessary there
+    }
+
+    public float getPlaybackSpeed() {
+        return 1f;
+    }
+
+    @Override
     public boolean showOverlay() {
         mHandler.removeMessages(SHOW_PROGRESS);
         mHandler.sendEmptyMessage(SHOW_PROGRESS);
