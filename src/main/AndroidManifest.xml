@@ -22,8 +22,7 @@
     <application
         android:allowBackup="true"
         android:name="org.videolan1.vlc.VLCApplication"
-        android:icon="@drawable/new_krasview_logo_small"
-        android:logo="@drawable/logo_bar"
+        android:icon="@drawable/logo_bar"
         android:label="krasview"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MyTheme"
@@ -101,7 +100,6 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
 
