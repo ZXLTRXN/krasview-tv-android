@@ -130,12 +130,10 @@ public class MainActivity extends KVSearchAndMenuActivity {
 
 	//настройка actionbar-a
 	private void styleActionBar() {
+		getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(android.R.drawable.dark_header));
 		if(ListAccount.fromLauncher) {
-			getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(android.R.drawable.dark_header));
 			getSupportActionBar().setIcon(R.drawable.kv_logo);
 			getSupportActionBar().setLogo(R.drawable.kv_logo);
-		} else {
-			getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_background));
 		}
 	}
 
