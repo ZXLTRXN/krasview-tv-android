@@ -30,8 +30,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 33
-        versionCode 184
-        versionName "1.184"
+        versionCode 185
+        versionName "1.185"
         applicationId "com.appcarestudio.krasview"
         archivesBaseName = "KrasViewTV_$versionName"
     }
