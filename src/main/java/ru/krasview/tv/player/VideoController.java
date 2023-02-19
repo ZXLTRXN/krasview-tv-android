@@ -165,7 +165,7 @@ public class VideoController extends FrameLayout {
 	};
 
 	private float roundPlaybackSpeed(double value) {
-		return (float) (Math.round(value * 10.0) / 10.0);
+		return (float) (Math.round(value * 100.0) / 100.0);
 	}
 
 	private float nextPlaybackSpeed() {
