@@ -169,13 +169,13 @@ public class VideoController extends FrameLayout {
 	}
 
 	private float nextPlaybackSpeed() {
-		float newSpeed = roundPlaybackSpeed(mVideo.getPlaybackSpeed() + 0.1);
+		float newSpeed = roundPlaybackSpeed(mVideo.getPlaybackSpeed() + 0.05);
 		mVideo.setPlaybackSpeed(newSpeed);
 		return newSpeed;
 	}
 
 	private float previousPlaybackSpeed() {
-		float newSpeed = roundPlaybackSpeed(mVideo.getPlaybackSpeed() - 0.1);
+		float newSpeed = roundPlaybackSpeed(mVideo.getPlaybackSpeed() - 0.05);
 		mVideo.setPlaybackSpeed(newSpeed);
 		return newSpeed;
 	}

@@ -85,7 +85,7 @@ public class KExoPlayer extends SurfaceView implements VideoInterface, EventList
 
 		// 3. Create the player
 		player = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
-		setPlaybackSpeed(1.2f);
+		setPlaybackSpeed(1.25f);
 		StyledPlayerView.requestFocus();
 		StyledPlayerView.setPlayer(player);
 
